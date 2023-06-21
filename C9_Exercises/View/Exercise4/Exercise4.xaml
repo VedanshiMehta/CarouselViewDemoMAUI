@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="C9_Exercises.View.Exercise4.Exercise4"
+             xmlns:viewModel="clr-namespace:C9_Exercises.ViewModel">
+    <ContentPage.BindingContext>
+        <viewModel:FastFoodDeliveryViewModel/>
+    </ContentPage.BindingContext>
+    <StackLayout Padding="10"
+                 BackgroundColor="White">
+        <Label 
+            Text="Skip"
+            HorizontalOptions="EndAndExpand"
+            TextColor="#FE8058"
+            FontAttributes="Bold"
+            FontSize="20">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding SkipTextClickedCommand}"
+                                      NumberOfTapsRequired="1"/>
+            </Label.GestureRecognizers>
+        </Label>
+        <CarouselView ItemsSource="{Binding FastFoodData}"
+                          IndicatorView="indicatorViewFood"
+                      CurrentItem="{Binding CurrentPageSelected}"
+                          IsScrollAnimated="True"
+                          IsSwipeEnabled="False"
+                          VerticalOptions="FillAndExpand"
+                          x:Name="carouselViewFoodDelivery">
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout VerticalOptions="FillAndExpand">
+                        <Image Source="{Binding Icon}"
+                                   HorizontalOptions="FillAndExpand"
+                                   HeightRequest="300"
+                                   />
+                        
+                        <Label Text="{Binding Title}"
+                                   TextColor="CadetBlue"
+                                   FontSize="30"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="FillAndExpand"
+                                   HorizontalTextAlignment="Center"
+                                   Margin="0,20,0,0"/>
+                        
+                        <Label Text="{Binding Description}"
+                                   Margin="0,10,0,0"
+                                   FontSize="16"
+                                   TextColor="{Binding Colors}"
+                                   HorizontalTextAlignment="Center"
+                                   HorizontalOptions="FillAndExpand"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+        <StackLayout VerticalOptions="End"
+                     HorizontalOptions="FillAndExpand"
+                     Spacing="20">
+        <IndicatorView x:Name="indicatorViewFood"
+                       IndicatorColor="DarkGray"
+                       HorizontalOptions="CenterAndExpand">
+            <IndicatorView.IndicatorTemplate>
+                <DataTemplate>
+
+                        <Border x:Name="frameBackground"
+                                Stroke="Gray"
+                                StrokeShape="RoundRectangle 5"
+                                BackgroundColor="Gray"
+                                HeightRequest="10"
+                                WidthRequest="10">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualState Name="Normal"/>
+                                    <VisualState Name="Selected">
+                                        <VisualState.Setters>
+                                            <Setter Property="Border.BackgroundColor"
+                                                            TargetName="frameBackground"
+                                                            Value="Gray"/>
+                                            <Setter Property="Border.StrokeShape"
+                                                    TargetName="frameBackground"
+                                                            Value="RoundRectangle 10"/>
+                                            <Setter Property="Border.StrokeThickness"
+                                                    TargetName="frameBackground"
+                                                            Value="4"/>
+                                            <Setter Property="Border.Stroke"
+                                                            TargetName="frameBackground"
+                                                            Value="Orange" />
+                                            <Setter Property="Border.HeightRequest"
+                                                    TargetName="frameBackground"
+                                                            Value="30"/>
+                                            <Setter Property="Border.WidthRequest"
+                                                    TargetName="frameBackground"
+                                                            Value="30"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Border>
+
+                    </DataTemplate>
+            </IndicatorView.IndicatorTemplate>
+        </IndicatorView>
+        <Button ImageSource="{Binding ButtonImage}"
+                CornerRadius="30"
+                HeightRequest="50"
+                WidthRequest="50"
+                BackgroundColor="{Binding ColorButton}"                
+                Command="{Binding GoNextPageCommand}"/>
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

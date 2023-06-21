@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="C9_Exercises.View.Exercise6.Exercise6"
+             xmlns:viewModel="clr-namespace:C9_Exercises.ViewModel">
+    <ContentPage.BindingContext>
+        <viewModel:GetProductViewModel/>
+    </ContentPage.BindingContext>
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal"
+                     Padding="5">
+            <VerticalStackLayout HorizontalOptions="StartAndExpand">
+                <Label  Text="Welcome to"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Start"
+                    TextColor="Gray"
+                    FontSize="16"/>
+                <Label  Text="O'line Mart"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Start"
+                    TextColor="DarkSlateGray"
+                    FontAttributes="Bold"
+                    FontSize="20"/>
+            </VerticalStackLayout>
+            <Image Source="searchicon"
+                   HorizontalOptions="EndAndExpand"/>
+            <Image Source="shoppingbag"
+                   HorizontalOptions="End"
+                   Margin="15,0,15,0"/>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.Resources>
+        <DataTemplate x:Key="productCategoryDataTemplate">
+            <StackLayout>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup Name="CommonStates">
+                    <VisualState Name="Normal">
+                        <VisualState.Setters>
+                            <Setter TargetName="border"
+                                        Property="Border.BackgroundColor"
+                                        Value="White"/>
+                            <Setter TargetName="border"
+                                        Property="Border.Stroke"
+                                        Value="White"/>
+                                <Setter TargetName="categoryTypes"
+                                        Property="Label.TextColor"
+                                        Value="Gray"/>
+                            </VisualState.Setters>
+                    </VisualState>
+                    <VisualState Name="Selected">
+                        <VisualState.Setters>
+                            <Setter TargetName="border"
+                                        Property="Border.BackgroundColor"
+                                        Value="#49A0C1"/>
+                            <Setter TargetName="border"
+                                        Property="Border.Stroke"
+                                        Value="#49A0C1"/>
+                                <Setter TargetName="categoryTypes"
+                                        Property="Label.TextColor"
+                                        Value="White"/>
+                            </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+            <Border StrokeShape="RoundRectangle 10"
+                        BackgroundColor="White"
+                        Stroke="White"
+                        x:Name="border"
+                        Padding="15">
+                <StackLayout>
+                    <Label x:Name="categoryTypes"
+                               TextColor="Gray"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               Text="{Binding .}"/>
+                </StackLayout>
+
+            </Border>
+        </StackLayout>
+        </DataTemplate>
+    </ContentPage.Resources>
+    <ScrollView>
+        <StackLayout Padding="18"
+                     BackgroundColor="WhiteSmoke">
+            <Label  Text="Categories"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Start"
+                    TextColor="DarkSlateGray"
+                    FontAttributes="Bold"
+                    FontSize="20"/>
+            <CollectionView x:Name="collectionView"
+                            ItemsSource="{Binding ProductCategory}"
+                            ItemTemplate="{StaticResource productCategoryDataTemplate}"
+                            BackgroundColor="WhiteSmoke"
+                            SelectionMode="Single"
+                            SelectedItem="{Binding SelectedItem}"
+                            SelectionChangedCommand="{Binding GetProductItemListCommand}"
+                            Margin="0,20,0,0">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal"
+                                       ItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
+            </CollectionView>
+            <CarouselView Margin="0,20,0,0"
+                          ItemsSource="{Binding ProductItems}"
+                          PeekAreaInsets="80"
+                          CurrentItem="{Binding Product}"     
+                          CurrentItemChangedCommand="{Binding CurrentSelectedProductCommand}"
+                          CurrentItemChangedCommandParameter="{Binding
+                                                                Source={RelativeSource Self},
+                                                                Path=CurrentItem}">
+                <CarouselView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal"
+                                       ItemSpacing="15"/>
+                </CarouselView.ItemsLayout>
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BackgroundColor="White"
+                                Stroke="White"
+                                StrokeShape="RoundRectangle 15"
+                                Padding="15">
+                            <StackLayout>
+                                <Border BackgroundColor="{Binding BackgroundColor}"
+                                Stroke="{Binding BackgroundColor}"
+                                StrokeShape="RoundRectangle 15"
+                                Padding="20">
+                                    <Image Source="{Binding Thumbnail}"
+                                           HeightRequest="150"
+                                           WidthRequest="150"/>
+                                </Border>
+                                <StackLayout Orientation="Horizontal"
+                                             Margin="0,20,0,0">
+                               <VerticalStackLayout>
+                                <Label x:Name="labelProductTitle"
+                                       Text="{Binding Title}"
+                                       HorizontalOptions="Start"
+                                       TextColor="Black"
+                                       FontAttributes="Bold"
+                                       FontSize="14"/>
+                                <Label x:Name="labelPrice"
+                                       Text="{Binding Price ,StringFormat='{}${0:0}'}"
+                                       HorizontalOptions="Start"
+                                       TextColor="Black"
+                                       FontAttributes="Bold"
+                                       FontSize="14"
+                                       VerticalOptions="FillAndExpand"/>
+                                    </VerticalStackLayout>
+                                    <Border BackgroundColor="{Binding BackgroundColor}"
+                                            Stroke="{Binding BackgroundColor}"
+                                            StrokeShape="RoundRectangle 40"
+                                            Padding="10"
+                                            HorizontalOptions="EndAndExpand">
+                                        
+                                        <Image Source="favicon"
+                                               HeightRequest="20"
+                                               WidthRequest="20"/>
+                                    </Border>
+                                </StackLayout>
+                            </StackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

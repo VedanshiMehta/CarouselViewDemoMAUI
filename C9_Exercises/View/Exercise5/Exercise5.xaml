@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="C9_Exercises.View.Exercise5.Exercise5"
+             xmlns:viewModel="clr-namespace:C9_Exercises.ViewModel">
+    <ContentPage.BindingContext>
+        <viewModel:SalesViewModel/>
+    </ContentPage.BindingContext>
+    <ScrollView>
+        <StackLayout BackgroundColor="DodgerBlue"
+                     Padding="25">
+            <Label Text="Welocme to"
+                   TextColor="White"
+                   FontSize="24"
+                   HorizontalTextAlignment="Center"/>
+            <Label Text="Orisale"
+                   TextColor="White"
+                   FontSize="32"
+                   HorizontalTextAlignment="Center"
+                   Margin="0,10,0,0"/>
+            <CarouselView IndicatorView="indicatorViewSales"
+                          ItemsSource="{Binding ImageList}"
+                          Loop="False"
+                          Margin="0,20,0,0"
+                          VerticalOptions="FillAndExpand"
+                          PeekAreaInsets="50">
+                <CarouselView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal"
+                                       ItemSpacing="15"/>
+                </CarouselView.ItemsLayout>
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="30"
+                               CornerRadius="50"
+                               BorderColor="White"
+                               >
+                            <StackLayout>
+                                <Image Source="{Binding .}"
+                                       VerticalOptions="CenterAndExpand"
+                                       HorizontalOptions="CenterAndExpand"/>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+            <Label Text="The complete sales app for your company"
+                   TextColor="White"
+                   FontSize="20"
+                   HorizontalTextAlignment="Center"
+                   VerticalOptions="End"
+                   Margin="0,20,0,0">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="The"/>
+                        <Span Text=" complete" FontAttributes="Bold"/>
+                        <Span Text=" sales app for your company"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <IndicatorView x:Name="indicatorViewSales"
+                       IndicatorColor="White"
+                       SelectedIndicatorColor="White"
+                       HorizontalOptions="CenterAndExpand"
+                       VerticalOptions="End"
+                       Margin="0,10,0,0">
+                <IndicatorView.IndicatorTemplate>
+                    <DataTemplate>
+
+                        <Border x:Name="frameBackground"
+                                Stroke="White"
+                                StrokeShape="RoundRectangle 5"
+                                BackgroundColor="White"
+                                HeightRequest="10"
+                                WidthRequest="10">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualState Name="Normal"/>
+                                    <VisualState Name="Selected">
+                                        <VisualState.Setters>
+                                            <Setter Property="Border.StrokeShape"
+                                                    TargetName="frameBackground"
+                                                            Value="RoundRectangle 15"/>
+                                            <Setter Property="Border.HeightRequest"
+                                                    TargetName="frameBackground"
+                                                            Value="20"/>
+                                            <Setter Property="Border.WidthRequest"
+                                                    TargetName="frameBackground"
+                                                            Value="20"/>
+                                            <Setter Property="Border.Stroke"
+                                                            TargetName="frameBackground"
+                                                            Value="White" />
+                                            <Setter Property="Border.BackgroundColor"
+                                                            TargetName="frameBackground"
+                                                            Value="White"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Border>
+
+                    </DataTemplate>
+                </IndicatorView.IndicatorTemplate>
+            </IndicatorView>
+            <Button Text="Get Started"
+                    HorizontalOptions="Fill"
+                    CornerRadius="40"
+                    Padding="30"
+                    BackgroundColor="Black"
+                    Margin="0,20,0,0"
+                    Clicked="Button_Clicked"/>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

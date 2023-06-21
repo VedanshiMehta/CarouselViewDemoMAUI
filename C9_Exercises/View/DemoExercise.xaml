@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="C9_Exercises.View.DemoExercise"
+             Shell.NavBarIsVisible="False"
+             xmlns:viewModel="clr-namespace:C9_Exercises.ViewModel">
+    <ContentPage.BindingContext>
+        <viewModel:DemoViewModel/>
+    </ContentPage.BindingContext>
+    <ScrollView>
+        <StackLayout Padding="15"
+                     BackgroundColor="White">
+            <CarouselView ItemsSource="{Binding FoodData}"
+                          IndicatorView="indicatorViewLibrary"
+                          Loop="False"
+                          Position="{Binding CurrentPage}"
+                          VerticalOptions="FillAndExpand"
+                          x:Name="carouselViewFoodDelivery">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout VerticalOptions="FillAndExpand">
+                            <Image Source="{Binding Icon}"
+                                   HorizontalOptions="FillAndExpand"
+                                   HeightRequest="300"
+                                   />
+                            <Label Text="{Binding Title}"
+                                   TextColor="Orange"
+                                   FontSize="30"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="FillAndExpand"
+                                   HorizontalTextAlignment="Center"
+                                   Margin="0,20,0,0"/>
+                            <Label Text="{Binding Description}"
+                                   Margin="0,10,0,0"
+                                   FontSize="16"
+                                   TextColor="#92B6EF"
+                                   HorizontalTextAlignment="Center"
+                                   HorizontalOptions="FillAndExpand"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+            <StackLayout Orientation="Horizontal"
+                         VerticalOptions="End">
+                <IndicatorView x:Name="indicatorViewLibrary"
+                               IndicatorsShape="Circle"
+                               HorizontalOptions="StartAndExpand"
+                               VerticalOptions="CenterAndExpand">
+                    <IndicatorView.IndicatorTemplate>
+                        <DataTemplate>
+
+                            <Border x:Name="frameBackground"
+                                        Stroke="Gray"
+                                        BackgroundColor="Gray"
+                                       HeightRequest="8"
+                                    StrokeShape="RoundRectangle 5"
+                                        WidthRequest="8">
+
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup Name="CommonStates">
+                                        <VisualState Name="Normal"/>
+                                        <VisualState Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Property="Border.BackgroundColor"
+                                                            TargetName="frameBackground"
+                                                            Value="Orange"/>
+                                                <Setter Property="Border.Stroke"
+                                                            TargetName="frameBackground"
+                                                            Value="Orange"/>
+                                                <Setter Property="Border.HeightRequest"
+                                                            TargetName="frameBackground"
+                                                            Value="8"/>
+                                                <Setter Property="Border.WidthRequest"
+                                                            TargetName="frameBackground"
+                                                            Value="20"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </Border>
+                        </DataTemplate>
+                    </IndicatorView.IndicatorTemplate>
+                </IndicatorView>
+                <Button ImageSource="nextarrow"
+                        CornerRadius="30"
+                        HeightRequest="50"
+                        WidthRequest="50"
+                        BackgroundColor="Orange"
+                        HorizontalOptions="EndAndExpand"
+                        VerticalOptions="CenterAndExpand"
+                        Command="{Binding Next}"/>
+            </StackLayout>
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
